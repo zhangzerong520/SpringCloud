@@ -1,0 +1,31 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: microservicecloud-zuul-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+  instance:
+    instance-id: gateway-9527.com
+    prefer-ip-address: true
+
+#代理名称 http://myzuul.com:9527/microservicecloud-dept/dept/get/2  =》 http://myzuul.com:9527/mydept/dept/get/1
+zuul:
+#设置统一公共前缀
+  prefix: /sise
+#原真实服务名忽略
+  ignored-services: "*"
+  routes:
+    mydept.serviceId: microservicecloud-dept
+    mydept.path: /mydept/**
+
+info:
+  app.name: huaruan-sise-microservicecloud
+  company.name: www.huaruan.sise.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
